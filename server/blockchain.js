@@ -10,6 +10,10 @@ const universityDataContract = new web3.eth.Contract(contractABI, contractAddres
 
 // Function to add or update a student on the blockchain
 const addOrUpdateStudent = async (studentId, name, programme, joinYear, cgpa, graduateYear, fromAddress, privateKey) => {
+    // Check if cgpa and graduateYear are not null or undefined
+    cgpa = cgpa ?? 0; // If cgpa is null/undefined, default to 0
+    graduateYear = graduateYear ?? 0; // If graduateYear is null/undefined, default to 0
+
     const data = universityDataContract.methods.addOrUpdateStudent(studentId, name, programme, joinYear, cgpa, graduateYear).encodeABI();
 
     const tx = {
