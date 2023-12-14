@@ -13,7 +13,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.1",
     "mysql": "^2.18.1",
-    "web3": "^1.6.0"
+    "web3": "^1.10.3"
   },
   "description": "",
   "devDependencies": {
