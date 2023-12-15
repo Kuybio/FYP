@@ -194,31 +194,37 @@
         const universityDataContract = new web3.eth.Contract(contractABI, contractAddress);
 
         // Function to fetch student data from the blockchain
-        window.fetchStudentData = async function() {
-            const studentId = document.getElementById('studentIdInput').value.trim();
-            if (!studentId) {
-                alert('Please enter a student ID.');
-                return;
-            }
+window.fetchStudentData = async function() {
+  const studentId = document.getElementById('studentIdInput').value.trim();
+  if (!studentId) {
+      alert('Please enter a student ID.');
+      return;
+  }
 
-            try {
-                // Use the contract method 'getStudent' to fetch the student data
-                const studentData = await universityDataContract.methods.getStudent(studentId).call();
-                
-                // Convert BigInts to strings
-                const studentDataWithStrings = JSON.parse(JSON.stringify(studentData, (_, v) =>
-                    typeof v === 'bigint' ? v.toString() : v));
-                
-                // Display the student data
-                const displayArea = document.getElementById('studentData');
-                displayArea.textContent = JSON.stringify(studentDataWithStrings, null, 2);
-            } catch (error) {
-                console.error(error);
-                alert('Failed to fetch student data. Make sure you are connected to the correct network and that the student ID is correct.');
-            }
-        }
-    } else {
-        alert('Please install MetaMask to interact with this page.');
+  try {
+      // Use the contract method 'getStudent' to fetch the student data
+      const studentData = await universityDataContract.methods.getStudent(studentId).call();
+      
+      // Convert BigInts to strings
+      const studentDataWithStrings = JSON.parse(JSON.stringify(studentData, (_, v) =>
+          typeof v === 'bigint' ? v.toString() : v));
+      
+      // Format and display the student data
+      const displayArea = document.getElementById('studentData');
+      let displayText = '';
+      displayText += 'Student ID = ' + studentDataWithStrings.studentId + '\n';
+      displayText += 'Name = ' + studentDataWithStrings.name + '\n';
+      displayText += 'Programme = ' + studentDataWithStrings.programme + '\n';
+      displayText += 'Join Year = ' + studentDataWithStrings.joinYear + '\n';
+      displayText += 'CGPA = ' + studentDataWithStrings.cgpa + '\n';
+      displayText += 'Graduate Year = ' + studentDataWithStrings.graduateYear + '\n';
+
+      displayArea.textContent = displayText;
+  } catch (error) {
+      console.error(error);
+      alert('Failed to fetch student data. Make sure you are connected to the correct network and that the student ID is correct.');
+  }
+}
     }
 </script>
 
