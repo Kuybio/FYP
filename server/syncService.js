@@ -60,6 +60,6 @@ const syncStudentsWithBlockchain = async () => {
 setInterval(syncStudentsWithBlockchain, 30000); // Adjust the interval as needed
 
 module.exports = {
-  syncStudentsWithBlockchain,
+  syncWithBlockchain: syncStudentsWithBlockchain, // Exported as syncWithBlockchain
   fetchUnsyncedOrUpdatedStudents
 };
