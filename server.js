@@ -1,16 +1,37 @@
 const express = require('express');
-const { syncStudentsWithBlockchain } = require('./server/syncService');
+const path = require('path');
+const bodyParser = require('body-parser');
+
+// Import blockchain interaction functions if needed
+// const blockchain = require('./server/blockchain');
 
 const app = express();
-const port = 3000; // You can change the port number if needed
+const port = 3000; // You can use process.env.PORT to set port dynamically
 
-// Start the synchronization service
-syncStudentsWithBlockchain();
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'client', 'public')));
 
-app.get('/', (req, res) => {
-  res.send('University Data Sync Service is Running');
+// Body parser middleware to handle JSON data
+app.use(bodyParser.json());
+
+// REST API endpoint example (if you need server-side interaction with the blockchain)
+app.post('/api/getStudentData', async (req, res) => {
+    try {
+        const { studentId } = req.body;
+        
+        // Call your blockchain interaction function here
+        // const data = await blockchain.getStudentData(studentId);
+        
+        // For now, we'll just return the studentId received
+        // Replace this with the actual blockchain call result
+        res.json({ studentId, data: 'Blockchain data here...' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
 });
 
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });

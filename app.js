@@ -1,19 +1,16 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const { syncStudentsWithBlockchain } = require('./server/syncService');
+
 const app = express();
-const port = 3000;
+const port = 3000; // You can change the port number if needed
 
-// Middleware for parsing JSON bodies
-app.use(bodyParser.json());
+// Start the synchronization service
+syncStudentsWithBlockchain();
 
-// Define routes for your API
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('University Data Sync Service is Running');
 });
 
-// Other routes and logic here...
-
-// Start the server
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
